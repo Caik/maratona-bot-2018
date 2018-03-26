@@ -1,0 +1,37 @@
+{
+	"name": "bot",
+	"version": "1.0.0",
+	"description": "",
+	"main": "src/app.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "gulp"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@types/mongoose": "^5.0.7",
+		"@types/request": "^2.47.0",
+		"@types/request-promise": "^4.1.41",
+		"botbuilder": "^3.14.1",
+		"botbuilder-cognitiveservices": "^1.1.0",
+		"cheerio": "^1.0.0-rc.2",
+		"dotenv": "^5.0.1",
+		"mongoose": "^5.0.11",
+		"request": "^2.85.0",
+		"request-promise": "^4.2.2",
+		"restify": "^7.0.0"
+	},
+	"devDependencies": {
+		"@types/node": "^9.6.0",
+		"@types/cheerio": "^0.22.7",
+		"@types/dotenv": "^4.0.2",
+		"@types/restify": "^5.0.7",
+		"gulp": "^3.9.1",
+		"gulp-clean": "^0.4.0",
+		"gulp-nodemon": "^2.2.1",
+		"gulp-typescript": "^4.0.1",
+		"nodemon": "^1.17.2",
+		"typescript": "^2.7.2"
+	}
+}
