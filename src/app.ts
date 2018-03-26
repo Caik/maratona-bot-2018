@@ -13,14 +13,14 @@ const cognitiveservices = require("botbuilder-cognitiveservices");
 
 dotenv.config();
 
-mongoose.connect(
-	process.env.COSMOSDB_CONNSTR + process.env.COSMOSDB_DBNAME
-	// +
-	// 	"?ssl=true&replicaSet=globaldb"
-);
+// mongoose.connect(
+// 	process.env.COSMOSDB_CONNSTR + process.env.COSMOSDB_DBNAME
+// 	// +
+// 	// 	"?ssl=true&replicaSet=globaldb"
+// );
 
-const db = mongoose.connection;
-db.once("open", () => console.log("Connected to DB"));
+// const db = mongoose.connection;
+// db.once("open", () => console.log("Connected to DB"));
 
 // const thread = new RedditThread();
 // thread.score = 1;
