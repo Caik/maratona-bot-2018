@@ -55,7 +55,9 @@ const connector = new builder.ChatConnector({
 	appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 
-const bot = new builder.UniversalBot(connector);
+const inMemoryStorage = new builder.MemoryBotStorage();
+
+const bot = new builder.UniversalBot(connector).set("storage", inMemoryStorage);
 
 // Endpoint que irá monitorar as mensagens do usuário
 server.post("/api/messages", connector.listen());
@@ -76,9 +78,13 @@ bot.dialog("/", (session, args) => {
 		return;
 	}
 
-	// session.userData = null;
+	session.endDialog();
 
-	// session.endDialog();
+	session.beginDialog("teste");
+});
+
+bot.dialog("teste", (session, args) => {
+	session.send("TESTÂO");
 });
 
 function getName(session) {
