@@ -37,7 +37,7 @@ export class SubRedditScraper {
 		this.threads = value;
 	}
 
-	public async requestThreads() {
+	public async requestThreads(): Promise<void> {
 		this.Threads = [];
 
 		const options = {

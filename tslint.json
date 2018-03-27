@@ -63,7 +63,7 @@
 			"options": [1]
 		},
 		"max-line-length": {
-			"options": [120]
+			"options": [180]
 		},
 		"member-access": true,
 		"member-ordering": {
@@ -105,7 +105,7 @@
 		"no-var-keyword": true,
 		"no-var-requires": false,
 		"object-literal-key-quotes": {
-			"options": ["consistent-as-needed"]
+			"options": ["as-needed"]
 		},
 		"object-literal-shorthand": true,
 		"object-literal-sort-keys": false,

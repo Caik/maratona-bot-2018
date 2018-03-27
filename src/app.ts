@@ -1,6 +1,7 @@
 import * as dotenv from "dotenv";
 import * as mongoose from "mongoose";
 
+import { Luis } from "./bot/Luis";
 import { RedditThread } from "./entity/RedditThread";
 import { SubRedditVisit } from "./entity/SubRedditVisit";
 import rtModel from "./model/RedditThreadModel";
@@ -74,21 +75,49 @@ bot.dialog("/", (session, args) => {
 	}
 
 	if (!session.userData.name) {
-		getName(session);
+		let name: string = session.message.text;
+		name = name.replace(/(?:^|\s)\S/g, a => a.toUpperCase());
+		session.userData.name = name;
+		session.send(`${getGreeting()} ${name}`);
+		session.send(`Aqui vai alguns exemplos do que posso lhe ajudar:
+		\n* Vasculhar algum SubReddit.
+		\n     **Ex:** Me mostre os resultados do subreddit cats com score mínimo de 1000 upvotes
+		\n* Ver os SubReddits mais procurados.
+		\n     **Ex:** Me mostre os subreddits mais pedidos
+		\n* Saber um pouco mais sobre mim.
+		\n     **Ex:** Me conte mais sobre você`);
+		session.send("Agora me diga, no que posso te ajudar?");
+
 		return;
 	}
 
+	session.beginDialog("luis");
 	session.endDialog();
-
-	session.beginDialog("teste");
 });
 
-bot.dialog("teste", (session, args) => {
-	session.send("TESTÂO");
+bot.dialog("luis", async (session, args) => {
+	const term = session.message.text;
+
+	const luis = new Luis();
+	const result = await luis.getResult(term);
+
+	session.send(JSON.stringify(result));
 });
 
-function getName(session) {
-	const name = session.message.text;
-	session.userData.name = name;
-	session.send("Olá, " + name + ". Há algo em que possa ajudar?");
+function getGreeting(): string {
+	const hour = new Date().getHours();
+
+	if (hour < 4) {
+		return "Boa noite";
+	}
+
+	if (hour < 12) {
+		return "Bom dia";
+	}
+
+	if (hour < 18) {
+		return "Boa tarde";
+	}
+
+	return "Boa noite";
 }
