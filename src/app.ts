@@ -41,7 +41,7 @@ dotenv.config();
 // scrapper.Url = "cats";
 
 // scrapper.requestThreads().then(() => {
-// 	scrapper.Threads.forEach(thread => {});
+// 	scrapper.Threads.forEach(thread => {console.log(thread)});
 // });
 
 // Setup Restify Server
@@ -76,16 +76,16 @@ bot.dialog("/", (session, args) => {
 
 	if (!session.userData.name) {
 		let name: string = session.message.text;
-		name = name.replace(/(?:^|\s)\S/g, a => a.toUpperCase());
+		name = name.replace(/(?:^|\s)\S/g, a => a.toUpperCase()); 
 		session.userData.name = name;
 		session.send(`${getGreeting()} ${name}`);
 		session.send(`Aqui vai alguns exemplos do que posso lhe ajudar:
-		\n* Vasculhar algum SubReddit.
-		\n     **Ex:** Me mostre os resultados do subreddit cats com score mínimo de 1000 upvotes
-		\n* Ver os SubReddits mais procurados.
-		\n     **Ex:** Me mostre os subreddits mais pedidos
-		\n* Saber um pouco mais sobre mim.
-		\n     **Ex:** Me conte mais sobre você`);
+			\n* Vasculhar algum SubReddit.
+			\n     **Ex:** Me mostre os resultados do subreddit cats com score mínimo de 1000 upvotes
+			\n* Ver os SubReddits mais procurados.
+			\n     **Ex:** Me mostre os subreddits mais pedidos
+			\n* Saber um pouco mais sobre mim.
+			\n     **Ex:** Me conte mais sobre você`);
 		session.send("Agora me diga, no que posso te ajudar?");
 
 		return;
