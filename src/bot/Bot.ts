@@ -4,6 +4,8 @@ import { ILuisResponse } from "../interface/ILuisResponse";
 import { LuisService } from "../service/LuisService";
 import { UtilsService } from "../service/UtilsService";
 import { Luis } from "./Luis";
+import { SubRedditSearchService } from "../service/SubRedditSearchService";
+import { RedditThread } from '../entity/RedditThread';
 
 export class Bot {
 	public readonly ROOT_DIALOG: string = "/";
@@ -101,7 +103,7 @@ export class Bot {
 	private setShowThreadsDialog(): void {
 		this._bot.dialog(
 			this.SHOW_THREADS_INTENT,
-			(session, luisResponse: ILuisResponse) => {
+			async (session, luisResponse: ILuisResponse) => {
 				if (!luisResponse) {
 					session.beginDialog(this.NONE_INTENT);
 					session.endDialog();
@@ -124,11 +126,56 @@ export class Bot {
 					}**`
 				);
 
-				// Chamar o redditService e pegar as threads
+				// TODO Chamar o cosmosDBService
 
-				// Mostrar as threads
+				let result: RedditThread[];
+				try {
+					result = await SubRedditSearchService.search(entities);
+				} catch (error) {
+					console.error(error);
+					session.send(`Me desculpe ${session.userData.name}, algum erro ocorreu! :(`);
+					session.send("Poderia tentar novamente mais tarde, por favor?");
+					session.endDialog();
+					return;
+				}
 
-				// session.endDialog();
+				const resultLength = result.length;
+
+				if(resultLength == 0) {
+					session.send(`Que pena ${session.userData.name}, não encontrei nenhum resultado, para o SubReddit **${entities.subReddit}** 
+					com mínimo de **${entities.score}** upvotes`);
+					session.send("Que tal tentar outro SubReddit? Ou quem sabe diminuir o valor mínimo de upvotes");
+				}
+				else {
+					session.send(`Muito bem ${session.userData.name}, encontrei ${resultLength} resultado${resultLength === 1 ? "" : "(s)"} para o SubReddit **${entities.subReddit}** 
+					com mínimo de **${entities.score}** upvotes, aí vão:`);
+					// result.forEach(thread => console.log(thread));
+					
+					var msg = new builder.Message(session);
+					msg.attachmentLayout(builder.AttachmentLayout.carousel) 
+					msg.attachments([
+						new builder.HeroCard(session)
+							.title("Classic White T-Shirt") 
+							.subtitle("100% Soft and Luxurious Cotton")
+							.text("Price is $25 and carried in sizes (S, M, L, and XL)")
+							.images([builder.CardImage.create(session, 'http://petersapparel.parseapp.com/img/whiteshirt.png')])
+							.buttons([
+								builder.CardAction.imBack(session, "buy classic white t-shirt", "Buy")
+							]),
+						new builder.HeroCard(session)
+							.title("Classic Gray T-Shirt")
+							.subtitle("100% Soft and Luxurious Cotton")
+							.text("Price is $25 and carried in sizes (S, M, L, and XL)")
+							.images([builder.CardImage.create(session, 'http://petersapparel.parseapp.com/img/grayshirt.png')])
+							.buttons([
+								builder.CardAction.imBack(session, "buy classic gray t-shirt", "Buy")
+							])
+					]);
+					session.send(msg)
+				}
+
+
+				session.endDialog();
 			}
 		);
 	}

@@ -36,17 +36,27 @@ export class LuisService {
 	}
 
 	public static getSubRedditSearchEntities(luisResponse: ILuisResponse): ISubRedditSearch {
-		const subReddit = luisResponse.entities.find(
-			entity => entity.type === "Subreddit"
-		).entity;
+		let subReddit: string;
+		let score: number; 
 
-		if (!subReddit) {
+		const subRedditEntity = luisResponse.entities.find(
+			entity => entity.type === "SubReddit"
+		);
+
+		const scoreEntity = luisResponse.entities.find(
+			entity => entity.type === "Score"
+		);
+
+		if (!subRedditEntity) {
 			return;
 		}
 
-		const score = luisResponse.entities.find(
-			entity => entity.type === "Score"
-		).score;
+		subReddit = subRedditEntity.entity;
+
+		if(score) {
+			score = parseInt(scoreEntity.entity, 10)
+		}
+
 
 		return { subReddit, score };
 	}

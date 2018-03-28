@@ -2,19 +2,22 @@ import { RedditThread } from "../entity/RedditThread";
 import { ISubRedditSearch } from "../interface/ISubRedditSearch";
 import { SubRedditScraper } from "../scrapper/SubRedditScraper";
 
-export class SuRedditSearchService {
+export class SubRedditSearchService {
 	public static async search(
 		entities: ISubRedditSearch
 	): Promise<RedditThread[]> {
-		// TODO Chamar o cosmosDBService
-
 		const scrapper = new SubRedditScraper();
 
 		scrapper.url = entities.subReddit;
 
+		// TODO ver essa bosta aqui
 		if (entities.score) {
 			scrapper.minScore = entities.score;
+		} 
+		else {
+			entities.score = scrapper.minScore;
 		}
+
 
 		try {
 			await scrapper.requestThreads();
