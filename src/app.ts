@@ -57,10 +57,3 @@ const app = new App();
 // subredditVisit.subReddit = "cats";
 // subredditVisit.createdAt = new Date();
 // svModel.create(subredditVisit.toJSON());
-
-// const scrapper = new SubRedditScraper();
-// scrapper.Url = "cats";
-
-// scrapper.requestThreads().then(() => {
-// 	scrapper.Threads.forEach(thread => {console.log(thread)});
-// });
