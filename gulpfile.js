@@ -2,6 +2,7 @@ var gulp = require("gulp");
 var ts = require("gulp-typescript");
 var clean = require("gulp-clean");
 var nodemon = require("gulp-nodemon");
+var fs = require("fs");
 
 var tsProject = ts.createProject("tsconfig.json");
 
@@ -24,7 +25,14 @@ gulp.task("watch", ["compile"], () => {
 	gulp.watch("src/**/*.ts", ["compile"]);
 });
 
-gulp.task("serve dev", ["watch"], () => {
+gulp.task("loadenv", () => {
+	if(!fs.existsSync(".env")) {
+		console.log("Criando .env file");
+		fs.createReadStream('.env.sample').pipe(fs.createWriteStream('.env'));
+	}
+});
+
+gulp.task("serve dev", ["loadenv", "watch"], () => {
 	nodemon({
 		script: "dist/app.js",
 		env: { NODE_ENV: "development" }

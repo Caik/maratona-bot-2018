@@ -10,7 +10,7 @@ export class SubRedditScraper {
 
 	private _url: string;
 
-	private _minScore: number = 5000;
+	private _minScore: number = 1000;
 
 	private _threads: RedditThread[] = [];
 
@@ -85,21 +85,4 @@ export class SubRedditScraper {
 		});
 	}
 
-	public threadsToString(): string {
-		let text: string = "";
-
-		if (this.threads.length === 0) {
-			text += "Nenhuma Thread a ser mostrada!\n";
-			text += " - Subreddit: " + this.url + "\n";
-			text += " - Score mínimo: " + this.minScore + "\n";
-			text += "----------------------------------------\n";
-			return text;
-		}
-
-		this.threads.forEach(thread => {
-			text += thread.toString();
-		});
-
-		return text;
-	}
 }

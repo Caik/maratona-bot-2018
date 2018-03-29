@@ -46,6 +46,6 @@ export class App {
 	private configureDatabase() {
 		require("./config/database");
 	}
-}
+} 
 
 const app = new App();
