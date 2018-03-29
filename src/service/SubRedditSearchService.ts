@@ -13,11 +13,9 @@ export class SubRedditSearchService {
 		// TODO ver essa bosta aqui
 		if (entities.score) {
 			scrapper.minScore = entities.score;
-		} 
-		else {
+		} else {
 			entities.score = scrapper.minScore;
 		}
-
 
 		try {
 			await scrapper.requestThreads();

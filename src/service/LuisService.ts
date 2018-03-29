@@ -35,9 +35,11 @@ export class LuisService {
 		return luisResponse.topScoringIntent.intent;
 	}
 
-	public static getSubRedditSearchEntities(luisResponse: ILuisResponse): ISubRedditSearch {
+	public static getSubRedditSearchEntities(
+		luisResponse: ILuisResponse
+	): ISubRedditSearch {
 		let subReddit: string;
-		let score: number; 
+		let score: number;
 
 		const subRedditEntity = luisResponse.entities.find(
 			entity => entity.type === "SubReddit"
@@ -53,10 +55,9 @@ export class LuisService {
 
 		subReddit = subRedditEntity.entity;
 
-		if(score) {
-			score = parseInt(scoreEntity.entity, 10)
+		if (scoreEntity) {
+			score = parseInt(scoreEntity.entity, 10);
 		}
-
 
 		return { subReddit, score };
 	}

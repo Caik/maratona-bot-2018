@@ -3,6 +3,7 @@ import * as restify from "restify";
 import { Server } from "restify";
 
 import { Bot } from "./bot/Bot";
+import { CosmosDBService } from "./service/CosmosDBService";
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ export class App {
 		this.setupServer();
 		this.createBot();
 		this.initializeServer();
+		this.configureDatabase();
 	}
 
 	private setupServer(): void {
@@ -40,20 +42,10 @@ export class App {
 	private getConnector() {
 		return this._bot.getConnector();
 	}
+
+	private configureDatabase() {
+		require("./config/database");
+	}
 }
 
 const app = new App();
-
-// const thread = new RedditThread();
-// thread.score = 1;
-// thread.title = "Teste";
-// thread.commentsLink = "ÇINK";
-// thread.selfLink = "AUHS";
-// thread.createdAt = new Date();
-// thread.subReddit = "SUUU";
-// rtModel.create(thread.toJSON());
-
-// const subredditVisit = new SubRedditVisit();
-// subredditVisit.subReddit = "cats";
-// subredditVisit.createdAt = new Date();
-// svModel.create(subredditVisit.toJSON());

@@ -71,16 +71,4 @@ export class RedditThread implements IRedditThread {
 			createdAt: this.createdAt
 		};
 	}
-
-	public toString(): string {
-		let ret: string = "";
-		ret += "Título: " + this.title + "\n";
-		ret += " - SubReddit: " + this.subReddit + "\n";
-		ret += " - Link: " + this.selfLink + "\n";
-		ret += " - Score: " + this.score + "\n";
-		ret += " - Link para os comentários: " + this.commentsLink + "\n";
-		ret += "----------------------------------------\n";
-
-		return ret;
-	}
 }
