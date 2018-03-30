@@ -6,7 +6,7 @@ var fs = require("fs");
 
 var tsProject = ts.createProject("tsconfig.json");
 
-gulp.task("default", ["serve dev"]);
+gulp.task("default", ["serveDev"]);
 
 gulp.task("clean", () => {
 	return gulp
@@ -25,14 +25,14 @@ gulp.task("watch", ["compile"], () => {
 	gulp.watch("src/**/*.ts", ["compile"]);
 });
 
-gulp.task("loadenv", () => {
-	if(!fs.existsSync(".env")) {
+gulp.task("createEnv", () => {
+	if (!fs.existsSync(".env")) {
 		console.log("Criando .env file");
-		fs.createReadStream('.env.sample').pipe(fs.createWriteStream('.env'));
+		fs.createReadStream(".env.sample").pipe(fs.createWriteStream(".env"));
 	}
 });
 
-gulp.task("serve dev", ["loadenv", "watch"], () => {
+gulp.task("serveDev", ["createEnv", "watch"], () => {
 	nodemon({
 		script: "dist/app.js",
 		env: { NODE_ENV: "development" }
@@ -40,3 +40,5 @@ gulp.task("serve dev", ["loadenv", "watch"], () => {
 		console.log("restarted");
 	});
 });
+
+gulp.task("serveProd", ["compile"], () => {});

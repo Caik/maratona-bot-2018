@@ -5,7 +5,9 @@
 	"main": "src/app.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "gulp"
+		"dev": "gulp",
+		"prod": "gulp serveProd && node dist/app.js",
+		"createEnv": "gulp createEnv"
 	},
 	"author": "",
 	"license": "ISC",
@@ -18,7 +20,10 @@
 		"query-string": "^6.0.0",
 		"request": "^2.85.0",
 		"request-promise": "^4.2.2",
-		"restify": "^7.0.0"
+		"restify": "^7.0.0",
+		"gulp": "^3.9.1",
+		"gulp-clean": "^0.4.0",
+		"gulp-typescript": "^4.0.1"
 	},
 	"devDependencies": {
 		"@types/mongoose": "^5.0.7",
@@ -29,11 +34,7 @@
 		"@types/cheerio": "^0.22.7",
 		"@types/dotenv": "^4.0.2",
 		"@types/restify": "^5.0.7",
-		"gulp": "^3.9.1",
-		"gulp-clean": "^0.4.0",
 		"gulp-nodemon": "^2.2.1",
-		"gulp-typescript": "^4.0.1",
-		"nodemon": "^1.17.2",
 		"typescript": "^2.7.2"
 	}
 }
